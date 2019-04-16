@@ -1,0 +1,93 @@
+<app-superadminpanel>
+
+</app-superadminpanel>
+
+<div class="admin-table-container mat-elevation-z8">
+
+
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Advanced Filter Options
+      </mat-expansion-panel-header>
+      <mat-form-field >
+        <mat-label>Select User</mat-label>
+        <mat-select [formControl]="this.userControl">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let user of users" [value]="user.username">
+            {{user.username}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field  >
+        <mat-label>Mask</mat-label>
+        <mat-select [formControl]="this.maskControl">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let mask of masks" [value]="mask.value">
+            {{mask.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" [(ngModel)]="this.number" placeholder="Number">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text"[(ngModel)]="this.status" placeholder="Status">
+      </mat-form-field>
+      <section>
+        <button (click)="resetcontrols()">Reset</button>
+        <button (click)="updatetable()">Update</button>
+        <button (click)="downloadfile()">Download</button>
+      </section>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="datasource" matSort matSortActive="created" matSortDisableClear matSortDirection="desc" class="admin-table">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef> User </th>
+      <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef> Message </th>
+      <td mat-cell *matCellDef="let element"> {{element.message.message}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef> Number </th>
+      <td mat-cell *matCellDef="let element"> {{element.message.phonenumber}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.message.status}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="mask">
+      <th mat-header-cell *matHeaderCellDef> Mask </th>
+      <td mat-cell *matCellDef="let element"> {{element.message.mask}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+</div>

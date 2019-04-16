@@ -1,0 +1,109 @@
+<div class="superadmin-container mat-elevation-z8" *ngIf="this.datastore.hasAuthority('SADMIN')" >
+
+  <mat-accordion >
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          New Mask
+        </mat-panel-title>
+        <mat-panel-description>
+          Expand the panel to add new Mask
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field class="full-width" >
+        <textarea  [formControl]="this.maskvalue" matInput placeholder="Enter the New Mask"></textarea>
+      </mat-form-field>
+      <button mat-raised-button (click)="addMask()" color="primary">Primary</button>
+
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="clearselection();getAllUsers()"
+                         (closed)="clearselection()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add new User
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <mat-form-field class="full-width" >
+        <input  [formControl]="this.username" matInput placeholder="Username" required>
+      </mat-form-field>
+      <mat-form-field class="full-width" >
+        <input  [formControl]="this.password" matInput  type="password" placeholder="Password" required>
+      </mat-form-field>
+      <mat-form-field class="full-width" >
+        <input [formControl]="this.passwordconfirm" type="password" matInput placeholder="Reenter password" required>
+      </mat-form-field>
+      <mat-form-field class="full-width" >
+        <input  [formControl]="this.name" matInput placeholder="Name">
+      </mat-form-field>
+      <section class="checkbox-section">
+        <mat-checkbox class="checkbox-margin" [(ngModel)]="isadmin">Admin</mat-checkbox>
+        <mat-checkbox class="checkbox-margin" [(ngModel)]="issadmin">Super Admin</mat-checkbox>
+      </section>
+
+
+      <section class="button-section">
+        <button  class="button-margin" mat-raised-button (click)="addnewuser()" color="primary">Add new</button>
+
+      </section>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="clearselection()"
+                         (closed)="clearselection()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Update User
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+
+      <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Users</mat-card-title>
+        <mat-card-subtitle>Select one user from the list to edit the user details</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+
+      <mat-chip-list class="full-width"  *ngFor="let user of users">
+        <mat-chip (click)="this.setcurrentuser(user)">{{user.name}}</mat-chip>
+      </mat-chip-list >
+
+
+      </mat-card-content>
+
+      </mat-card>
+
+
+      <mat-divider></mat-divider>
+      <mat-form-field class="full-width" >
+        <input  [formControl]="this.username" matInput placeholder="Username" required disabled>
+      </mat-form-field>
+      <mat-form-field class="full-width" >
+        <input  [formControl]="this.password" matInput  type="password" placeholder="Password" required>
+      </mat-form-field>
+      <mat-form-field class="full-width" >
+        <input [formControl]="this.passwordconfirm" type="password" matInput placeholder="Reenter password" required>
+      </mat-form-field>
+      <mat-form-field class="full-width" >
+        <input  [formControl]="this.name" matInput placeholder="Name">
+      </mat-form-field>
+      <section class="checkbox-section">
+        <mat-checkbox class="checkbox-margin" [(ngModel)]="this.adminrole">Admin</mat-checkbox>
+        <mat-checkbox class="checkbox-margin" [(ngModel)]="this.sadminrole">Super Admin</mat-checkbox>
+      </section>
+
+
+      <section class="button-section">
+
+        <button class="button-margin" mat-raised-button (click)="updateuser()" color="primary">Update</button>
+        <button class="button-margin" mat-raised-button (click)="deleteuser()" color="primary">Delete</button>
+      </section>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
+
+</div>

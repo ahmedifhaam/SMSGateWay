@@ -1,0 +1,80 @@
+#tabgroup{
+
+  display: block;
+  background: white;
+  opacity: 0.5%;
+  margin-left: 20%;
+  margin-top: 4%;
+  margin-right: 20%;
+  padding: 40px;
+  /*z-index: 1;*/
+
+}
+
+#overlay{
+  /*position: absolute;*/
+  /*background: white;*/
+
+  /*filter:blur(4px);*/
+  /*opacity: 0.5%;*/
+  /*z-index: 100;*/
+}
+
+ .full-width {
+  width: 100%;
+}
+
+
+/* Structure */
+.admin-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.admin-table-container {
+  position: relative;
+  max-height: 70%;
+  overflow: auto;
+  margin:5%;
+  padding: 2%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.admin-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+
+

@@ -1,0 +1,15 @@
+<mat-toolbar style="color:white;background: #990606">
+  <mat-toolbar-row id="header-bar">
+    <img id="logo" src="assets/logo.png">
+    <span style="font-size: xx-large">SMS Gateway</span><span>&nbsp; University of Kelaniya</span>
+    <span class="example-spacer"></span>
+    <!--<button mat-button (click)="showHeaderControls=!showHeaderControls">test</button>-->
+    <span *ngIf="showHeaderControls">
+      <button mat-button (click)="logout()" >Logout</button>
+      <button *ngIf="this.datastore.hasAuthority('ADMIN')" mat-button (click)="adminpanel()">
+       | {{this.router.url === "/adminpanel"?"Main":"Admin Panel"}} </button>
+    </span>
+
+  </mat-toolbar-row>
+
+</mat-toolbar>

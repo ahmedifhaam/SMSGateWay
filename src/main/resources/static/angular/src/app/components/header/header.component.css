@@ -1,0 +1,14 @@
+#header-bar{
+  height: 100px;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+#logo{
+  height: 80px;
+  width: 80px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}

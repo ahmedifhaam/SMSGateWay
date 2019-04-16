@@ -1,0 +1,36 @@
+.superadmin-container{
+  margin:5%;
+  padding:2%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.checkbox-section{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.checkbox-margin {
+  margin: 0 10px 10px;
+}
+
+.button-section{
+  display: flex;
+  align-content: flex-end;
+  align-items: flex-end;
+}
+
+.button-margin{
+  margin: 0px 10px 10px;
+}
+
+.users-list{
+  margin: 0px;
+  margin-left: 20px;
+  padding-left: 20px;
+
+}
