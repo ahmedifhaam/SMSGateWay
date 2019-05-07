@@ -6,6 +6,10 @@ import {Role, User} from "../../models/user";
 import {UserService} from "../../services/user/user.service";
 import {forEach} from "@angular/router/src/utils/collection";
 import {DatastoreService} from "../../services/datastore/datastore.service";
+import {RegexentryService} from "../../services/regexentry/regexentry.service";
+import {logging} from "selenium-webdriver";
+import Entry = logging.Entry;
+import {RegexEntry} from "../../models/RegexEntry";
 
 @Component({
   selector: 'app-superadminpanel',
@@ -19,6 +23,16 @@ export class SuperadminpanelComponent implements OnInit {
   maskvalue = new FormControl('',[
     Validators.required
   ]);
+
+
+  regname = new FormControl('',[
+    Validators.required
+  ]);
+
+  regex = new FormControl('',[
+    Validators.required
+  ]);
+
 
   username = new FormControl('',[
     Validators.required
@@ -39,8 +53,11 @@ export class SuperadminpanelComponent implements OnInit {
   sadminrole:boolean = false;
 
   users:User[] = [];
+  entries:RegexEntry[] = [];
+  private currentlySelectedEntry: RegexEntry;
 
-  constructor(private maskservice:MaskserviceService,private userservice:UserService,private datastore:DatastoreService) { }
+  constructor(private maskservice:MaskserviceService,private userservice:UserService
+              ,private datastore:DatastoreService,private regeexservice:RegexentryService) { }
 
   ngOnInit() {
     this.getAllUsers();
@@ -66,10 +83,18 @@ export class SuperadminpanelComponent implements OnInit {
 
   }
 
+  public setcurrentregexentry(entry:RegexEntry){
+    this.currentlySelectedEntry = entry;
+    this.updateEntryDetails();
+  }
 
   public setcurrentuser(user:User){
     this.currentlySelectedUser = user;
     this.updateUserDetails()
+  }
+  private updateEntryDetails() {
+    this.regname.setValue(this.currentlySelectedEntry.name);
+    this.regex.setValue(this.currentlySelectedEntry.expression);
   }
 
   updateUserDetails(){
@@ -99,6 +124,43 @@ export class SuperadminpanelComponent implements OnInit {
       });
     });
 
+  }
+
+  getAllRegexEntries(){
+    this.regeexservice.getAllEntries().subscribe((entries:RegexEntry[])=>{
+      this.entries.splice(0,this.entries.length);
+      entries.forEach(entry=>{
+        this.entries.push(entry);
+      });
+    });
+  }
+
+  getRegexEntryObject(){
+    var entry:RegexEntry={
+      name : this.regname.value,
+      expression:this.regex.value
+    }
+
+    return entry;
+  }
+
+
+  updateEntry(){
+    this.regeexservice.updateEntry(this.getRegexEntryObject()).subscribe(response=>{
+      if(response['response']=="SUCCESSFUL") alert("Successfully updated");
+    },error1 => alert(stringify(error1)));
+  }
+
+  insertEntry(){
+    this.regeexservice.insertEntry(this.getRegexEntryObject()).subscribe(response=>{
+      if(response['response']=="SUCCESSFUL") alert("Successfully Added");
+    },error1 => alert(stringify(error1)));
+  }
+
+  deleteEntry(){
+    this.regeexservice.deleteEntry(this.getRegexEntryObject()).subscribe(response=>{
+      if(response['response']=="SUCCESSFUL") alert("Successfully Deleted");
+    },error1 => alert(stringify(error1)));
   }
 
   getuserObject(){
@@ -145,6 +207,7 @@ export class SuperadminpanelComponent implements OnInit {
     }
 
     this.getAllUsers();
+
   }
 
   deleteuser(){
@@ -159,13 +222,16 @@ export class SuperadminpanelComponent implements OnInit {
   }
 
   clearselection(){
-    this.username.setValue("");
-    this.password.setValue("");
-    this.passwordconfirm.setValue("");
+    this.regex.reset()
+    this.regname.reset()
+    this.username.reset()
+    this.password.reset()
+    this.passwordconfirm.reset()
     this.sadminrole = false;
     this.adminrole = false;
-    this.name.setValue("");
+    this.name.reset()
 
   }
+
 
 }

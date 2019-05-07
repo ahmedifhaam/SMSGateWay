@@ -1,5 +1,8 @@
 package com.xelvias.imsms.Models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -68,5 +71,17 @@ public class Message implements Serializable {
 
     public void setId(Long id) {
         Id = id;
+    }
+
+    @Override
+    public String toString(){
+        String s = null;
+        try {
+            s = new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return s;
     }
 }

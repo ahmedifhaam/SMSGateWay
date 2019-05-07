@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/")
 public class RedirectController {
-    @GetMapping("/redirecthome")
+    @GetMapping("/processing")
     public ModelAndView redirectWithUsingRedirectPrefix(ModelMap model) {
         model.addAttribute("attribute", "redirectWithRedirectPrefix");
         return new ModelAndView("/index.html", model);

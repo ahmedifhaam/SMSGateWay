@@ -37,6 +37,5 @@ public class MessageLogService {
 
         return messageLogDao.findAll(Example.of(messageLog));
 
-//        return messageLogDao.findAllByUserAndMessageMaskAndMessageStatusAndMessagePhonenumber(user,mask,status,number);
     }
 }

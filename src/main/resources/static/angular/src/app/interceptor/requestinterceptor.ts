@@ -9,6 +9,7 @@ export class Requestinterceptor implements HttpInterceptor{
       console.log(event);
     },error=>{
       console.log("error");
+      alert("Unexpected Response error,Retry after sometime if error persists, please contact admin, ")
       console.log(error);
     }));
 

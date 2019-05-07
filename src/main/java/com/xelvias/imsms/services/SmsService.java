@@ -2,16 +2,21 @@ package com.xelvias.imsms.services;
 
 import com.xelvias.imsms.Dao.MessageDao;
 import com.xelvias.imsms.Dao.MessageLogDao;
+import com.xelvias.imsms.Dao.RegexEntryDao;
+import com.xelvias.imsms.Models.Constants;
 import com.xelvias.imsms.Models.Message;
 import com.xelvias.imsms.Models.MessageLog;
+import com.xelvias.imsms.Models.RegexEntry;
 import com.xelvias.imsms.utils.DateUtil;
 import com.xelvias.imsms.utils.FileUtils;
+import com.xelvias.imsms.utils.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,11 +24,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @Service
 public class SmsService {
+    private Log log  = LogFactory.getLog(SmsService.class);
+
+    @Autowired
+    RegexEntryDao regexEntryDao;
+
     @Autowired
     MessageLogDao messageLogDao;
 
@@ -42,6 +51,7 @@ public class SmsService {
         messageLog.getMessage().setStatus(status);
         messageLog.setDate(DateUtil.getCurrentDateTime());
         messageLogDao.save(messageLog);
+        log.info(messageLog);
         return messageLog;
     }
 
@@ -72,6 +82,8 @@ public class SmsService {
 
 
     private String sendSmsCall(Message message){
+
+        if(!isPhoneNumberValid(message)) return "FAILED :"+" Invalid phone number";
         String Uri = "https://cpsolutions.dialog.lk/index.php/cbs/sms/send?destination="+message.getPhonenumber()+
                 "&q="+apikey+"&message="+message.getMessage()+"&from="+message.getMask();//api key should be removed
 
@@ -91,5 +103,13 @@ public class SmsService {
         String specialchars = "\\ufeff";
         return in.replaceAll(specialchars,"");
 
+    }
+
+    private boolean isPhoneNumberValid(Message message){
+        RegexEntry entry = regexEntryDao.findByName(Constants.PHONE_VALIDATION);
+        if(entry==null) return true;
+        else{
+            return StringUtils.matchRegularExpression(message.getPhonenumber(),entry.getExpression());
+        }
     }
 }

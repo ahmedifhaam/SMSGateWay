@@ -66,11 +66,11 @@ export class AdminpanelComponent implements OnInit,AfterViewInit {
   }
 
   updateData(){
-    this.messagelogService.getallmessagelog().subscribe((response:Messagelog[])=>{
-      this.data = response;
-      this.datasource.data = this.data;
-
-    })
+    // this.messagelogService.getallmessagelog().subscribe((response:Messagelog[])=>{
+    //   this.data = response;
+    //   this.datasource.data = this.data;
+    //
+    // })
 
     this.userservice.getallusers().subscribe((users:User[])=>{
       this.users = users;

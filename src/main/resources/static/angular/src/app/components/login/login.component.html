@@ -16,20 +16,20 @@
             <tr>
               <td>
                 <mat-form-field style="width: 100%" >
-                  <input matInput placeholder="Username" [formControl]="username" name="username" required>
+                  <input matInput (keyup.enter)="login()" placeholder="Username" [formControl]="username" name="username" required>
                 </mat-form-field>
               </td>
             </tr>
             <tr>
               <td><mat-form-field style="width: 100%">
-                <input matInput placeholder="Password" [formControl]="password" type="password" name="password" required>
+                <input matInput (keyup.enter)="login()" placeholder="Password" [formControl]="password" type="password" name="password" required>
               </mat-form-field></td>
             </tr></table>
         </form>
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button (click)="login()" color="red">Login</button>
+        <button mat-raised-button (keydown.enter)="login()" (click)="login()" color="red">Login</button>
       </mat-card-actions>
     </mat-card>
 

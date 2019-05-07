@@ -34,8 +34,9 @@ public class ResourceConfig implements WebMvcConfigurer {
 
         @Override
         public void addViewControllers(final ViewControllerRegistry registry){
+
 //            registry.addViewController("/processing").setViewName("");
-//            registry.addViewController("/adminpanel").setViewName("forward:/static/angular/dist/angular/index.html");
+            registry.addViewController("/adminpanel").setViewName("forward:/");
         }
 
 }

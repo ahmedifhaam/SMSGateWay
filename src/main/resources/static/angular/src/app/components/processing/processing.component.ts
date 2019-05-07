@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {ErrorStateMatcher, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {FileUploader} from "ng2-file-upload";
@@ -22,7 +22,10 @@ export interface Mask {
   templateUrl: './processing.component.html',
   styleUrls: ['./processing.component.css']
 })
-export class ProcessingComponent implements OnInit {
+export class ProcessingComponent implements OnInit,OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
   displayedColumns: string[] = ['user', 'date', 'message','mask','number', 'status'];
   results:Messagelog[] = [];
   datasource = new MatTableDataSource<Messagelog>(this.results);
@@ -38,9 +41,7 @@ export class ProcessingComponent implements OnInit {
   phonenumber = new FormControl('',[
     Validators.required,
   ]);
-  maskcontrol = new FormControl('',[
-    Validators.required,
-  ]);
+  maskcontrol = new FormControl();
 
   matcher = new MyErrorStateMatcher();
 
@@ -79,9 +80,9 @@ export class ProcessingComponent implements OnInit {
 
   filteroptions :Observable<Mask[]>;
 
-  password = new FormControl('',[
+  password = new FormControl("s",[
     Validators.required
-  ]);
+  ],);
   passwordconfirm = new FormControl('',[
     Validators.required
   ]);
@@ -105,10 +106,10 @@ export class ProcessingComponent implements OnInit {
       if(data.message.phonenumber.toString().toLowerCase().indexOf(filterstring)>-1)return true;
     };
 
-
     this.maskservice.getallmasks().subscribe((masks:Mask[])=>{
-      this.options = this.options.concat(masks);
+      this.options = masks;
     });
+
 
     this.uploader.onBuildItemForm = (fileitem:any,form:any) =>{
       form.append('message',this.message.value)
@@ -134,16 +135,22 @@ export class ProcessingComponent implements OnInit {
       .pipe(
         startWith<string | Mask>(''),
         debounceTime(200),distinctUntilChanged(),
+
         map(mask =>typeof mask ==='string' ? mask: mask.value),
         map(name=>name?this._filter(name):this.options.slice())
       );
+
+    this.maskcontrol.setValue(" ");
+    this.maskcontrol.setValue("");
   }
 
   displayFn(mask?:Mask):string | undefined{
+
     return mask ? mask.value  : undefined;
   }
 
   _filter(name:string):Mask[]{
+    console.log("name value "+ name);
     const filterValue = name.toLowerCase();
     return this.options.filter(option=>
       option.value.toLowerCase().indexOf(filterValue) === 0
@@ -151,14 +158,14 @@ export class ProcessingComponent implements OnInit {
   }
 
   public sendsms(){
-    console.log("clicked");
     this.smsservice.sendsms(this.phonenumber.value,this.message.value,this.maskcontrol.value['value']).subscribe(
       response =>{
         console.log(response);
         if(response['message'].status=="SENT"){
           alert("Message to the number "+response['message'].phonenumber+" has been sent successfully")
         }else{
-          alert("Message to the number "+response['message'].phonenumber+" has not been sent")
+          alert("Message to the number "+response['message'].phonenumber+" has not been sent ("+response['message'].status)
+
         }
 
       }
