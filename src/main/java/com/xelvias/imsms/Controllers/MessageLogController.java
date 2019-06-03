@@ -2,6 +2,7 @@ package com.xelvias.imsms.Controllers;
 
 import com.xelvias.imsms.Dao.MessageLogDao;
 import com.xelvias.imsms.Models.MessageLog;
+import com.xelvias.imsms.Models.Phonenumber;
 import com.xelvias.imsms.services.MessageLogService;
 import com.xelvias.imsms.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -81,6 +83,26 @@ public class MessageLogController {
                 .body(inputStreamResource);
 
 //        return messageLogDao.findAll();
+    }
+
+    @RequestMapping(value = "/samplecsv",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Resource> getSampleCsv() throws Exception{
+
+
+        File file = new File(FileUtils.sampleFile());
+        InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(inputStreamResource);
     }
 
 

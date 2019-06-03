@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Messagelog} from "../../models/messagelog";
 import {HttpClient} from "@angular/common/http";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +21,6 @@ export class MessagelogserviceService {
   }
 
   filemessagelogs(query:string){
-    window.open(this.filefiltereddownload+query);
+    window.open("/sms"+this.filefiltereddownload+query);
   }
 }

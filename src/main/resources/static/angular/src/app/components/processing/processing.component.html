@@ -7,12 +7,13 @@
     <div class="layout-align-center">
       <form>
         <mat-form-field class="full-width">
-          <input type="text" placeholder="Mask" aria-label="Mask" matInput [formControl]="maskcontrol" [matAutocomplete]="auto">
+          <input type="text" placeholder="Mask" aria-label="Mask" aria-roledescription="test" matInput [formControl]="maskcontrol" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngFor="let option of filteroptions | async" [value]="option">
               {{option.value}}
             </mat-option>
           </mat-autocomplete>
+          <mat-hint>Please select a mask ( From number )</mat-hint>
           <mat-error  *ngIf="!maskcontrol.hasError('required')">
             Please select a valid mask
           </mat-error>
@@ -22,7 +23,9 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="Phone Number " [formControl]="phonenumber" [errorStateMatcher]="matcher" >
+          <mat-label>Phone Number</mat-label>
+          <input matInput placeholder="947*******" [formControl]="phonenumber" [errorStateMatcher]="matcher" >
+          <mat-hint>Number format should be 947*******</mat-hint>
           <mat-error  *ngIf="!phonenumber.hasError('required')">
             Please enter a valid Phone number
           </mat-error>
@@ -32,7 +35,8 @@
         </mat-form-field>
         <mat-divider></mat-divider>
         <mat-form-field class="full-width">
-          <input matInput  placeholder="Body  " [formControl]="message" [errorStateMatcher]="matcher">
+          <input matInput  placeholder="Message  " [formControl]="message" [errorStateMatcher]="matcher">
+          <mat-hint>Please enter the message body</mat-hint>
           <mat-error *ngIf="!message.hasError('required')">
             Please enter a valid Message
           </mat-error>
@@ -53,6 +57,8 @@
     <br><br>
     <div class="layout-align-center">
       <form>
+        <button mat-raised-button (click)="downloadsamplefile()" color="primary">Download Sample</button>
+        Uploading file should be of CSV format, all numbers in single column.
         <mat-form-field class="full-width">
           <input type="text" placeholder="Mask" aria-label="Mask" matInput [formControl]="maskcontrol" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -60,6 +66,7 @@
               {{option.value}}
             </mat-option>
           </mat-autocomplete>
+          <mat-hint>Please select a mask ( From number )</mat-hint>
           <mat-error  *ngIf="!maskcontrol.hasError('required')">
             Please select a valid mask
           </mat-error>
@@ -71,7 +78,8 @@
         <input type="file" name="photo" ng2FileSelect [uploader]="uploader" /><br><br>
         <mat-divider></mat-divider>
         <mat-form-field class="full-width">
-          <input matInput  placeholder="Body  " [formControl]="message" [errorStateMatcher]="matcher">
+          <input matInput  placeholder="Message  " [formControl]="message" [errorStateMatcher]="matcher">
+          <mat-hint>Please enter the message body</mat-hint>
           <mat-error *ngIf="!message.hasError('required')">
             Please enter a valid Message
           </mat-error>
@@ -90,55 +98,57 @@
 
 </mat-tab-group>
 
-<div class="mat-elevation-z8" *ngIf="this.results.length>0">
-  <table mat-table [dataSource]="datasource" matSort matSortActive="created" matSortDisableClear matSortDirection="desc" class="admin-table">
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="user">
-      <th mat-header-cell *matHeaderCellDef> User </th>
-      <td mat-cell *matCellDef="let element"> {{element.user}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="message">
-      <th mat-header-cell *matHeaderCellDef> Message </th>
-      <td mat-cell *matCellDef="let element"> {{element.message.message}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="number">
-      <th mat-header-cell *matHeaderCellDef> Number </th>
-      <td mat-cell *matCellDef="let element"> {{element.message.phonenumber}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.message.status}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="mask">
-      <th mat-header-cell *matHeaderCellDef> Mask </th>
-      <td mat-cell *matCellDef="let element"> {{element.message.mask}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
 
 
 
+<p></p>
 <mat-accordion class="bottom-toolbar">
+  <!--<div class="mat-elevation-z8" >-->
+    <div class="mat-elevation-z8" *ngIf="this.results.length>0">
+    <table mat-table [dataSource]="datasource" matSort matSortActive="created" matSortDisableClear matSortDirection="desc" class="admin-table">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef> User </th>
+        <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef> Message </th>
+        <td mat-cell *matCellDef="let element"> {{element.message.message}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef> Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.message.phonenumber}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.message.status}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="mask">
+        <th mat-header-cell *matHeaderCellDef> Mask </th>
+        <td mat-cell *matCellDef="let element"> {{element.message.mask}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
   <mat-expansion-panel (opened)="clearinputs()" (closed)="clearinputs()">
     <mat-expansion-panel-header>
       <mat-panel-title>

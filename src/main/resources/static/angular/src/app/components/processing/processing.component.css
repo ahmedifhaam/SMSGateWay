@@ -11,15 +11,6 @@
 
 }
 
-#overlay{
-  /*position: absolute;*/
-  /*background: white;*/
-
-  /*filter:blur(4px);*/
-  /*opacity: 0.5%;*/
-  /*z-index: 100;*/
-}
-
  .full-width {
   width: 100%;
 }
@@ -75,6 +66,14 @@ table {
 
 .mat-column-created {
   max-width: 124px;
+}
+
+.bottom-toolbar{
+  position: absolute;
+  bottom:0;
+  width:100%;
+
+  background:#6cf;
 }
 
 

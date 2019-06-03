@@ -3,9 +3,15 @@ import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 
 export class Requestinterceptor implements HttpInterceptor{
+  public applicationpath = "/sms";
+
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(tap((event:HttpEvent<any>)=>{
+
+    const updreq = req.clone({url: this.applicationpath+req.url});
+
+
+    return next.handle(updreq).pipe(tap((event:HttpEvent<any>)=>{
       console.log(event);
     },error=>{
       console.log("error");

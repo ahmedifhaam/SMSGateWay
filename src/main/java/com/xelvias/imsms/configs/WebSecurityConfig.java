@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -68,12 +69,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*.js*").permitAll()
                 .antMatchers("/*.ico").permitAll()
                 .antMatchers("/*.png").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/user").permitAll()
                 .antMatchers("/api/user").hasAuthority("SADMIN")
                 .antMatchers("/api/allusers").hasAuthority("ADMIN")
                 .antMatchers("/api/cuser").hasAuthority("USER")
                 .antMatchers("/api/filefiltermessagelogs").hasAuthority("ADMIN")
                 .antMatchers("/api/filemessagelogs").hasAuthority("ADMIN")
                 .antMatchers("/api/messagelogs").hasAuthority("ADMIN")
+                .antMatchers("/api/samplecsv").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

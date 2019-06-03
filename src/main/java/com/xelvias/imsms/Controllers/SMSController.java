@@ -20,12 +20,6 @@ public class SMSController {
     @Autowired
     SmsService smsService;
 
-    @RequestMapping(value = "test")
-    @ResponseBody
-    public String test(){
-        return "Success";
-    }
-
     @RequestMapping(value = "/sendSms",method = RequestMethod.POST)
     @ResponseBody
     public MessageLog sendsms (@RequestBody Message message){
@@ -36,6 +30,7 @@ public class SMSController {
     @RequestMapping(value = "/sendmultisms")
     @ResponseBody
     public List<MessageLog> sendmultiplesms(@RequestParam MultipartFile file,String message,String mask) throws Exception{
+        log.info("Bulk message : content "+message+" Mask : "+mask);
         return smsService.sendmultisms(file,message,mask);
     }
 }

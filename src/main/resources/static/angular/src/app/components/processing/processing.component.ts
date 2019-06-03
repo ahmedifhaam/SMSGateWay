@@ -23,6 +23,7 @@ export interface Mask {
   styleUrls: ['./processing.component.css']
 })
 export class ProcessingComponent implements OnInit,OnChanges {
+  private samplecsvUrl: string = "/sms/api/samplecsv";
   ngOnChanges(changes: SimpleChanges): void {
 
   }
@@ -33,7 +34,7 @@ export class ProcessingComponent implements OnInit,OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  uploadFileURL = '/api/sendmultisms';
+  uploadFileURL = 'api/sendmultisms';
   uploader = new FileUploader({ url : this.uploadFileURL, itemAlias: 'file'})
   message = new FormControl('',[
     Validators.required,
@@ -41,7 +42,9 @@ export class ProcessingComponent implements OnInit,OnChanges {
   phonenumber = new FormControl('',[
     Validators.required,
   ]);
-  maskcontrol = new FormControl();
+  maskcontrol = new FormControl('',[
+    Validators.required,
+  ]);
 
   matcher = new MyErrorStateMatcher();
 
@@ -219,9 +222,13 @@ export class ProcessingComponent implements OnInit,OnChanges {
       this.datasource.paginator.firstPage();
     }
   }
+  
+  downloadsamplefile(){
+    window.open(this.samplecsvUrl);
+  }
 }
 
-
+  
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {

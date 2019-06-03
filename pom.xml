@@ -100,6 +100,22 @@
 
 	<build>
 		<plugins>
+
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+
+					<!--<webXml>src/main/webapp/WEB-INF/web.xml</webXml>-->
+					<!--<packagingExcludes>**/node/**</packagingExcludes>-->
+					<!--<warSourceDirectory>${basedir}/src/main/resources/static/angular/src</warSourceDirectory>-->
+					<!--<packagingExcludes>${basedir}/src/main/resources/static/angular/src/*</packagingExcludes>-->
+					<packagingExcludes>WEB-INF/classes/static/angular/e2e/,WEB-INF/classes/static/angular/node/
+					,WEB-INF/classes/static/angular/node_modules/,WEB-INF/classes/static/angular/src/</packagingExcludes>
+					<warName>sms1.0</warName>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 			<!--<plugin>-->
 				<!--<artifactId>maven-resources-plugin</artifactId>-->
 				<!--<executions>-->
@@ -125,18 +141,29 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
+			<!--<plugin>-->
+				<!--<artifactId>maven-war-plugin</artifactId>-->
+				<!--<configuration>-->
+					<!--<webResources>-->
+						<!--<resource>-->
+							<!--<directory>src</directory>-->
+							<!--<filtering>true</filtering>-->
+							<!--&lt;!&ndash;<excludes>*</excludes>&ndash;&gt;-->
+							<!--<excludes>WEB-INF/classes/static/angular/src</excludes>-->
+							<!--<excludes>WEB-INF/classes/static/angular/node</excludes>-->
+							<!--<excludes>WEB-INF/classes/static/angular/node_modules</excludes>-->
+						<!--</resource>-->
+					<!--</webResources>-->
 
-					<warSourceExcludes>webscripts/**</warSourceExcludes>
 
-					<!--<packagingExcludes>WEB-INF/classes/static/angular/src/*</packagingExcludes>-->
-					<!--<packagingExcludes>WEB-INF/classes/static/angular/node/*</packagingExcludes>-->
-					<!--<packagingExcludes>WEB-INF/classes/static/angular/node_modules/*</packagingExcludes>-->
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
+
+
+					<!--&lt;!&ndash;<warSourceExcludes>webscripts/**</warSourceExcludes>&ndash;&gt;-->
+
+
+					<!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 
 			<plugin>
 				<groupId>com.github.eirslett</groupId>

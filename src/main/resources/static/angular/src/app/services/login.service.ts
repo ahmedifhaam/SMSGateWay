@@ -11,6 +11,7 @@ import {stringify} from "querystring";
 export class LoginService {
   loginUrl = "/perform_login";
   logouturi = "/perform_logout";
+  islogedinUrl = "/api/user"
   constructor(private http:HttpClient,private router :Router,private datastore:DatastoreService) {
 
   }
@@ -33,6 +34,21 @@ export class LoginService {
         console.log("ter");
         alert(stringify(error1))
       })
+  }
+
+  islogedin(){
+    return this.http.get(this.islogedinUrl).subscribe(
+      (response:LoginResponse)=>{
+        console.log("response is : ");
+        console.log(response);
+        if(response.response=="SUCCESSFUL"){
+          this.datastore.setLoginResponse(response);
+          this.datastore.setisLoggedIn(true);
+          this.router.navigateByUrl("/processing");
+
+        }
+      }
+    )
   }
 
 
