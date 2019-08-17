@@ -38,4 +38,15 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  gotoPasswordReset(){
+    this.router.navigateByUrl("password_reset");
+  }
+
+  gotoMain(){
+    this.router.navigateByUrl("/processing");
+  }
+
+  gotoAdmin(){
+    this.router.navigateByUrl("adminpanel");
+  }
 }

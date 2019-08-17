@@ -3,7 +3,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 import {ErrorStateMatcher, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {FileUploader} from "ng2-file-upload";
 import {SendsmsserviceService} from "../../services/sendsms/sendsmsservice.service";
-import {Observable} from "rxjs";
+import {Observable,of} from "rxjs";
 import {debounceTime, distinctUntilChanged, map, startWith} from "rxjs/operators";
 import {MaskserviceService} from "../../services/mask/maskservice.service";
 import {Role, User} from "../../models/user";
@@ -27,6 +27,9 @@ export class ProcessingComponent implements OnInit,OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
 
   }
+
+  displayreport = true;
+
   displayedColumns: string[] = ['user', 'date', 'message','mask','number', 'status'];
   results:Messagelog[] = [];
   datasource = new MatTableDataSource<Messagelog>(this.results);
@@ -54,7 +57,7 @@ export class ProcessingComponent implements OnInit,OnChanges {
     // {
     //   "value": "U Kelaniya",
     //   "id": 1
-    // }
+    // },
     // {
     //   "value": "UoK Pay",
     //   "id": 2
@@ -83,14 +86,9 @@ export class ProcessingComponent implements OnInit,OnChanges {
 
   filteroptions :Observable<Mask[]>;
 
-  password = new FormControl("s",[
-    Validators.required
-  ],);
-  passwordconfirm = new FormControl('',[
-    Validators.required
-  ]);
 
-  constructor(private smsservice:SendsmsserviceService,private maskservice:MaskserviceService,private userservice:UserService) {
+
+  constructor(private smsservice:SendsmsserviceService,private maskservice:MaskserviceService) {
 
   }
 
@@ -111,6 +109,8 @@ export class ProcessingComponent implements OnInit,OnChanges {
 
     this.maskservice.getallmasks().subscribe((masks:Mask[])=>{
       this.options = masks;
+      this.filteroptions = of(this.options.slice());
+      // alert("Downloaded");
     });
 
 
@@ -134,17 +134,14 @@ export class ProcessingComponent implements OnInit,OnChanges {
       alert("Requirement Processed");
     };
 
+
+
     this.filteroptions = this.maskcontrol.valueChanges
       .pipe(
         startWith<string | Mask>(''),
-        debounceTime(200),distinctUntilChanged(),
-
         map(mask =>typeof mask ==='string' ? mask: mask.value),
         map(name=>name?this._filter(name):this.options.slice())
       );
-
-    this.maskcontrol.setValue(" ");
-    this.maskcontrol.setValue("");
   }
 
   displayFn(mask?:Mask):string | undefined{
@@ -180,39 +177,9 @@ export class ProcessingComponent implements OnInit,OnChanges {
     this.uploader.uploadAll();
   }
 
-  public resetpassword(){
-    var user = this.getuserObject();
-    if(user!=null) this.userservice.resetuserpassword(user).subscribe(response=>{
-      if(response['response']=='SUCCESSFUL'){
-        alert("Updated successfully");
-      }else{
-        alert("Failed to update");
-      }
-    },error1 => {
-      alert(stringify(error1))
-    })
-  }
 
-  getuserObject(){
 
-    if(this.password.value!=this.passwordconfirm.value) {
-      alert("Passwords do not match");
-      return null;
-    }
-    var user:User = {
-      username:'',
-      password :this.password.value,
-      name : this.password.value,
-      roles:[]
-    };
 
-    return user;
-  }
-
-  public clearinputs(){
-    this.password.setValue("");
-    this.passwordconfirm.setValue("");
-  }
 
   applyFilter(filterValue: string) {
     this.datasource.filter = filterValue.trim().toLowerCase();
@@ -225,6 +192,15 @@ export class ProcessingComponent implements OnInit,OnChanges {
   
   downloadsamplefile(){
     window.open(this.samplecsvUrl);
+  }
+
+  resetformdata(){
+    this.maskcontrol.reset('');
+    // this.maskservice.getallmasks().subscribe((masks:Mask[])=>{
+    //   this.options = masks;
+    // });
+    this.message.reset();
+    this.phonenumber.reset();
   }
 }
 

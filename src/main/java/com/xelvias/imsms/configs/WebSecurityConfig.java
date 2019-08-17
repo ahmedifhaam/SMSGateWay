@@ -76,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/filefiltermessagelogs").hasAuthority("ADMIN")
                 .antMatchers("/api/filemessagelogs").hasAuthority("ADMIN")
                 .antMatchers("/api/messagelogs").hasAuthority("ADMIN")
-                .antMatchers("/api/samplecsv").hasAuthority("ADMIN")
+                .antMatchers("/api/samplecsv").hasAuthority("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

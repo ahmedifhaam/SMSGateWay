@@ -1,0 +1,29 @@
+<!--<mat-expansion-panel (opened)="clearinputs()" (closed)="clearinputs()">-->
+  <!--<mat-expansion-panel-header>-->
+    <!--<mat-panel-title>-->
+      <!--Reset Password-->
+    <!--</mat-panel-title>-->
+    <!--<mat-panel-description>-->
+      <!--Expand the panel to reset currently logged in users password-->
+    <!--</mat-panel-description>-->
+  <!--</mat-expansion-panel-header>-->
+<mat-tab-group id="tabgroup" mat-align-tabs="center">
+  <mat-tab label="Password Reset">
+    <div class="layout-align-center">
+      <form>
+        <br><br>
+        <mat-form-field class="full-width" >
+          <input  [formControl]="this.password" matInput  type="password" placeholder="Password" required>
+        </mat-form-field>
+        <mat-form-field class="full-width" >
+          <input [formControl]="this.passwordconfirm" type="password" matInput placeholder="Reenter password" required>
+        </mat-form-field>
+        <button mat-raised-button (click)="this.resetpassword()" color="primary">Reset Password</button>
+        <button style="margin-left: 20px" mat-raised-button (click)="this.clearinputs()" color="primary">Clear</button>
+      </form>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+
+<!--</mat-expansion-panel>-->

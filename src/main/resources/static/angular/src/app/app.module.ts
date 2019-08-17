@@ -28,6 +28,7 @@ import { MatButtonModule} from "@angular/material";
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 import { SuperadminpanelComponent } from './components/superadminpanel/superadminpanel.component';
 import {Requestinterceptor} from "./interceptor/requestinterceptor";
+import { PaswordresetComponent } from './components/paswordreset/paswordreset.component';
 
 
 
@@ -39,7 +40,8 @@ import {Requestinterceptor} from "./interceptor/requestinterceptor";
     FileSelectDirective,
     HeaderComponent,
     AdminpanelComponent,
-    SuperadminpanelComponent
+    SuperadminpanelComponent,
+    PaswordresetComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 
 
-<mat-tab-group id="tabgroup" mat-align-tabs="center" >
+<mat-tab-group id="tabgroup" mat-align-tabs="center" (selectedTabChange)="resetformdata()">
 
   <mat-tab label="Single">
     <br><br>
@@ -13,6 +13,7 @@
               {{option.value}}
             </mat-option>
           </mat-autocomplete>
+          <br>
           <mat-hint>Please select a mask ( From number )</mat-hint>
           <mat-error  *ngIf="!maskcontrol.hasError('required')">
             Please select a valid mask
@@ -21,7 +22,7 @@
             Mask is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-
+      <br>
         <mat-form-field class="full-width">
           <mat-label>Phone Number</mat-label>
           <input matInput placeholder="947*******" [formControl]="phonenumber" [errorStateMatcher]="matcher" >
@@ -57,8 +58,6 @@
     <br><br>
     <div class="layout-align-center">
       <form>
-        <button mat-raised-button (click)="downloadsamplefile()" color="primary">Download Sample</button>
-        Uploading file should be of CSV format, all numbers in single column.
         <mat-form-field class="full-width">
           <input type="text" placeholder="Mask" aria-label="Mask" matInput [formControl]="maskcontrol" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -74,8 +73,11 @@
             Mask is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-
-        <input type="file" name="photo" ng2FileSelect [uploader]="uploader" /><br><br>
+        <br><br>
+        <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+        <!--<br>-->
+        <h6>Uploading file should be of CSV format, all numbers in single column.</h6>
+        <!--<br>-->
         <mat-divider></mat-divider>
         <mat-form-field class="full-width">
           <input matInput  placeholder="Message  " [formControl]="message" [errorStateMatcher]="matcher">
@@ -90,7 +92,12 @@
 
 
         <mat-divider></mat-divider>
-        <button mat-raised-button (click)="sendmultisms()" color="primary">Send</button>
+        <br>
+          <button mat-raised-button (click)="sendmultisms()" color="primary">Send</button>
+
+          <button mat-raised-button style="float: right;background: gray;color: white" (click)="downloadsamplefile()" >Download Sample</button>
+
+
 
       </form>
     </div>
@@ -104,7 +111,8 @@
 <p></p>
 <mat-accordion class="bottom-toolbar">
   <!--<div class="mat-elevation-z8" >-->
-    <div class="mat-elevation-z8" *ngIf="this.results.length>0">
+    <div class="mat-elevation-z8" *ngIf="this.results.length>0 && displayreport">
+      <button mat-button color="primary" (click)="displayreport=!displayreport">Hide</button>
     <table mat-table [dataSource]="datasource" matSort matSortActive="created" matSortDisableClear matSortDirection="desc" class="admin-table">
 
       <!-- Position Column -->
@@ -149,22 +157,6 @@
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
-  <mat-expansion-panel (opened)="clearinputs()" (closed)="clearinputs()">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Reset Password
-      </mat-panel-title>
-      <mat-panel-description>
-        Expand the panel to reset currently logged in users password
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-form-field class="full-width" >
-      <input  [formControl]="this.password" matInput  type="password" placeholder="Password" required>
-    </mat-form-field>
-    <mat-form-field class="full-width" >
-      <input [formControl]="this.passwordconfirm" type="password" matInput placeholder="Reenter password" required>
-    </mat-form-field>
-    <button mat-raised-button (click)="this.resetpassword()" color="primary">Reset Password</button>
 
-  </mat-expansion-panel>
+
 </mat-accordion>

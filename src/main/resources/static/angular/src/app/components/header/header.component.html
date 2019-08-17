@@ -18,8 +18,11 @@
     <!--<button mat-button (click)="showHeaderControls=!showHeaderControls">test</button>-->
     <span *ngIf="showHeaderControls">
       <button mat-button (click)="logout()" >Logout</button>
-      <button *ngIf="this.datastore.hasAuthority('ADMIN')" mat-button (click)="adminpanel()">
-       | {{this.router.url === "/adminpanel"?"Main":"Admin Panel"}} </button>
+      <button mat-button (click)="gotoMain()">| Main</button>
+      <button *ngIf="this.datastore.hasAuthority('ADMIN') "mat-button (click)="gotoAdmin()">| Admin Panel</button>
+      <!--<button *ngIf="this.datastore.hasAuthority('ADMIN')" mat-button (click)="adminpanel()">-->
+       <!--| {{this.router.url === "/adminpanel"?"Main":"Admin Panel"}} </button>-->
+      <button mat-button (click)="gotoPasswordReset()">| Password Reset</button>
     </span>
 
   </mat-toolbar-row>

@@ -17,7 +17,7 @@ public class RedirectController {
     String contextpath;
 
 
-    @RequestMapping(path = {"**/processing","**/error","**/adminpanel"})
+    @RequestMapping(path = {"/error","**/processing","**/error","**/adminpanel"})
     public void redirectWithUsingRedirectPrefix(HttpServletResponse response) throws IOException {
         response.sendRedirect(contextpath+"/index.html");
 

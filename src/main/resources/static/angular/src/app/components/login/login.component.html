@@ -1,13 +1,13 @@
 <mat-grid-list cols="12" rowHeight="100px">
-  <mat-grid-tile [colspan]="12" [rowspan]="1"></mat-grid-tile>
-  <mat-grid-tile [colspan]="2" [rowspan]="6"></mat-grid-tile>
+  <!--<mat-grid-tile [colspan]="12" [rowspan]="1"></mat-grid-tile>-->
+  <mat-grid-tile [colspan]="2" [rowspan]="2"></mat-grid-tile>
 
-  <mat-grid-tile style="width: 100%" [colspan]="8" [rowspan]="6" style.background="black">
+  <mat-grid-tile style="width: 100%" [colspan]="8" [rowspan]="5" style.background="black">
     <mat-card align="center" class="login-card">
-      <img src="/sms/assets/sms.png">
+      <img src="/sms/assets/sms.png" style="width:128px;height:128px;">
       <br><br>
       <mat-card-header>
-        <mat-card-title align="right"style="font-size: xx-large;font-family: Helvetica">Kelaniya SMS</mat-card-title>
+        <mat-card-title align="right" style="font-size: xx-large;font-family: Helvetica">Kelaniya SMS</mat-card-title>
 
       </mat-card-header>
       <mat-card-content>
@@ -19,12 +19,14 @@
                   <input matInput (keyup.enter)="login()" placeholder="Username" [formControl]="username" name="username" required>
                 </mat-form-field>
               </td>
-            </tr>
-            <tr>
               <td><mat-form-field style="width: 100%">
                 <input matInput (keyup.enter)="login()" placeholder="Password" [formControl]="password" type="password" name="password" required>
               </mat-form-field></td>
-            </tr></table>
+            </tr>
+            <!--<tr>-->
+              <!---->
+            <!--</tr>-->
+          </table>
         </form>
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
       </mat-card-content>

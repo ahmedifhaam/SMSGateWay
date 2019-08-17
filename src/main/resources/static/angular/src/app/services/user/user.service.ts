@@ -8,7 +8,7 @@ import {User} from "../../models/user";
 export class UserService {
   url:string = "/api/user";
   urlalluser:string = "/api/allusers"
-  resetpasswordurl:string="api/cuser"
+  resetpasswordurl:string="/api/cuser"
   constructor(private http:HttpClient) { }
 
   getallusers(){

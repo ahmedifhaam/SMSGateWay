@@ -11,7 +11,7 @@
 
 }
 
- .full-width {
+.full-width {
   width: 100%;
 }
 
@@ -68,7 +68,13 @@ table {
   max-width: 124px;
 }
 
-
+.bottom-toolbar{
+  position: absolute;
+  bottom:0;
+  width:100%;
+  z-index: 999;
+  background:#6cf;
+}
 
 .example-spacer {
   flex: 1 1 auto;
